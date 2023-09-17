@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "UACadPhJJWgypCnxDtiEDw7URIcwQC3od9hJW6Cw8mE=",
+  "Source": "helloApp",
+  "BasePath": "_content/helloApp",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
