@@ -1,24 +1,30 @@
 var builder = WebApplication.CreateBuilder();
-
 var app = builder.Build();
 
 app.Run(async (context) =>
 {
-    var req = context.Request;
-
-    if (!String.IsNullOrEmpty(req.Query["first"]) && !String.IsNullOrEmpty(req.Query["second"]))
+    var response = context.Response;
+    var request = context.Request;
+    if (request.Path == "/api/user")
+    {
+        var message = "Некорректные данные";
+        try
         {
-            int first = int.Parse(context.Request.Query["first"]);
-            int second = int.Parse(context.Request.Query["second"]);
-            await context.Response.WriteAsync($"{first+second}");
+            var person = await request.ReadFromJsonAsync<Person>();
+            if (person != null)
+                message = $"Name: {person.Name}  Age: {person.Age}";
         }
+        catch { }
+        // отправляем пользователю данные
+        await response.WriteAsJsonAsync(new { text = message });
+    }
     else
     {
-        await context.Response.WriteAsync("bye!");
+        response.ContentType = "text/html; charset=utf-8";
+        await response.SendFileAsync("html/index.html");
     }
-
-
-
 });
 
 app.Run();
+
+public record Person(string Name, int Age);
